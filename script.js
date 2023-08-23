@@ -17,6 +17,7 @@ async function fetchPeople() {
       card.classList.add("col-md-2", "mb-4");
       card.innerHTML = `
         <div class="card">
+        <img src="Stars2.png"class="card-img-top" alt="Star wars actors">
           <div class="card-body">
             <h5 class="card-title">${person.name}</h5>
             <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#infoModal" data-info="${JSON.stringify(person, null, 2)}">
@@ -29,18 +30,22 @@ async function fetchPeople() {
     });
 
     // Show more info in the modal
-    const modal = new bootstrap.Modal(document.getElementById("infoModal"));
-    cardRow.addEventListener("click", event => {
-      const target = event.target;
-      if (target.classList.contains("btn")) {
-        const info = JSON.parse(target.getAttribute("data-info"));
-        modalBody.innerHTML = `
-          <p>Height: ${person.height}</p>
-          <p>Gender: ${person.gender}</p>
-        `;
-        modal.show();
+    async function updateModalContent() {
+        try {
+          const response = await fetch("https://swapi.dev/api/people");
+          const data = await response.json();
+          
+          const modalContent = document.getElementById("modalContent");
+          modalContent.innerHTML = `
+            <p>Name: ${data.name}</p>
+            <p>Height: ${data.height}</p>
+            <p>Gender: ${data.gender}</p>
+            <!-- Add more data as needed -->
+          `;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       }
-    });
   }
 
   renderCards();
