@@ -4,7 +4,9 @@ body{
 }
 
 
-
+small{
+  justify-content: center;
+}
 
 /* body{
     background-color:rgb(240, 138, 65);
