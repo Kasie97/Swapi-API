@@ -1,6 +1,5 @@
-const images = ['Skywalker.png', 'C-3PO2.png', 'R2-D2.png', 'Darth-Vader.png', 'Leia-Organa.png', 'Owen-Lars.png', 'Beru-Whitesun-Lars.png', 'R5-D4.png', 'Biggs-Darklighter.png', 'Obi-Wan-Kenobi.png'];
 
-
+// Fetching the Data from the API
 async function fetchPeople() {
     const response = await fetch("https://swapi.dev/api/people");
     const data = await response.json();
@@ -17,35 +16,48 @@ async function fetchPeople() {
       card.classList.add("col-md-2", "mb-4");
       card.innerHTML = `
         <div class="card">
-        <img src="Stars2.png"class="card-img-top" alt="Star wars actors">
+        <img src="./images/Stars2.png"class="card-img-top" alt="Star wars actors">
           <div class="card-body">
             <h5 class="card-title">${person.name}</h5>
-            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#infoModal" data-info="${JSON.stringify(person, null, 2)}">
-              More Info
-            </button>
-          </div>
+            <button class="w3-btn openModalBtn btn btn-dark">Open Modal</button>
+           </div>
         </div>
       `;
+
+
+        const openModalBtn = card.querySelector(".openModalBtn");
+        openModalBtn.addEventListener('click', () => {
+          showModal(person);
+        });
+    
       cardRow.appendChild(card);
     });
 
-    // Show more info in the modal
-    async function updateModalContent() {
-        try {
-          const response = await fetch("https://swapi.dev/api/people");
-          const data = await response.json();
-          
-          const modalContent = document.getElementById("modalContent");
-          modalContent.innerHTML = `
-            <p>Name: ${data.name}</p>
-            <p>Height: ${data.height}</p>
-            <p>Gender: ${data.gender}</p>
-            <!-- Add more data as needed -->
-          `;
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
+    function showModal(person) {
+        const modal = document.getElementById("myModal");
+        const modalBody = document.getElementById("modalBody");
+      
+        modal.style.display = "block";
+        modalBody.innerHTML = `
+          <h2>${person.name}</h2>
+          <p>Height: ${person.height}</p>
+          <p>Gender: ${person.gender}</p>
+        `;
+      
+        const closeModalBtn = modal.querySelector(".close");
+        closeModalBtn.addEventListener('click', () => {
+          modal.style.display = "none";
+        });
+      
+        window.addEventListener('click', event => {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
       }
-  }
+      
+      
+}    
 
-  renderCards();
+renderCards();
+
