@@ -19,7 +19,7 @@ async function fetchPeople() {
         <img src="./images/Stars2.png"class="card-img-top" alt="Star wars actors">
           <div class="card-body">
             <h5 class="card-title">${person.name}</h5>
-            <button class="w3-btn openModalBtn btn btn-dark">Open Modal</button>
+            <button class="w3-btn openModalBtn btn btn-dark">More Info</button>
            </div>
         </div>
       `;
