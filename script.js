@@ -40,8 +40,8 @@ async function fetchPeople() {
         modal.style.display = "block";
         modalBody.innerHTML = `
           <h2>${person.name}</h2>
-          <p>Height: ${person.height}</p>
           <p>Gender: ${person.gender}</p>
+          <p>Height: ${person.height} cm</p>
         `;
       
         const closeModalBtn = modal.querySelector(".close");
